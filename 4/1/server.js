@@ -5,6 +5,7 @@ var templating = require('consolidate');
 var handlebars = require('handlebars');
 var request    = require('request');
 var cheerio    = require('cheerio');
+var fs         = require('fs');
 var site;
 var sum;
 
@@ -18,16 +19,18 @@ app.get("/",function(req, res){
 		content:'Выберите параметры',
 		s1: 'Lenta',
 		s2: 'Yandex',
+    s3: 'Mail',
 	});
 });
-/*
+
 app.get("/work",function(req, res){
+  var text = fs.readFileSync("result.dat", 'utf8');
 	res.render('work',{
-		title: 'Это работает!!',
-		content: 'крутой модуль'
+		title: 'Новости',
+		content: text
 	});
 });
-*/
+
 /*
 var jsonParser = bodyParser.json();
 
@@ -42,58 +45,86 @@ app.post('/work', jsonParser, function(req, res) {
     }
 });
 */
-function Site(){
-	request('http://lenta.ru',function(error, response, html){
-     	if(!error && response.statusCode == 200){
-     		var $ = cheerio.load(html);
-     		$('.b-yellow-box').each(function(i, element){
-     			var cols =$(this).find('.item');
-     			var x = cols.eq(0).text();
-     			
-     			res.write(x);
-     		});
-     	}
-     });
-}
-function test(){
-	var a = "5";
-	var b = "5";
-	return "<h3>a + b<h3>";
-}
+
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.post('/work', urlencodedParser, function (req, res) {
+app.post('/add', urlencodedParser, function (req, res) {
+ 
+
   if (!req.body){
      return res.sendStatus(400);
    }else{
-  res.writeHead(200, {"Content-Type": "text/html"});
+
+
+
+  //res.writeHead(200, {"Content-Type": "text/html"});
   site = req.body.site;
   sum  = req.body.sum;
   console.log(site +" "+ sum);
-  //res.write(Site());
-
-
-
-  var r = request('http://lenta.ru',function(error, response, html){
+  
+  
+if(site == 'Lenta'){
+   request('http://lenta.ru',function(error, response, html){
      	if(!error && response.statusCode == 200){
      		var $ = cheerio.load(html);
+        var result = "";
      		$('.b-yellow-box').each(function(i, element){
      			var cols =$(this).find('.item');
-     			//var x = cols.eq(0).text();
-     			var form = r.form();
-     			form.append(cols.eq(0).text());
-     			console.log(
-				    cols.eq(0).text()
-				    +" "+ cols.eq(1).text()
-				    +" "+ cols.eq(2).text()
-				    +" "+ cols.eq(3).text()
-				    +" "+ cols.eq(4).text()
-				    +" "+ cols.eq(5).text()
-				);
+     			
+
+     		 for(var n = 0; n < sum; n++) {
+          result += cols.eq(n).text()+"\n";
+         }
+     			 
+         
      		});
      	}
+        fs.open("result.dat","w",0644, function(err,file_handle){
+                if(!err){ fs.write(file_handle,result,null,'utf8'); }
+            });
     });
-
+  }else if(site == 'Yandex') {
+         request('https://news.yandex.ru/',function(error, response, html){
+      if(!error && response.statusCode == 200){
+        var $ = cheerio.load(html);
+        var result ="";
+        $('.rubric__right').each(function(i, element){
+          var cols =$(this).find('.link_ajax_yes');
+          
+        
+           for(var n = 0; n < sum; n++) {
+          result += cols.eq(n).text()+"\n";
+         }
+         
+        });
+      }
+        fs.open("result.dat","w",0644, function(err,file_handle){
+                if(!err){ fs.write(file_handle,result,null,'utf8'); }
+            });
+    });
+  }else if(site == 'Mail') {
+         request('https://news.mail.ru/',function(error, response, html){
+      if(!error && response.statusCode == 200){
+        var $ = cheerio.load(html);
+        var result = "";
+        $('.b-flash-news__inner').each(function(i, element){
+          var cols =$(this).find('.b-flash-news__short__head__link');
+          
+        
+           for(var n = 0; n < sum; n++) {
+          result += cols.eq(n).text()+"\n";
+         }
+         
+        });
+      }  console.log(result)
+        fs.open("result.dat","w",0644, function(err,file_handle){
+                if(!err){ fs.write(file_handle,result,null,'utf8'); }
+            });
+    });
+  }
+  res.write('<meta http-equiv="refresh" content="1;URL=/work" />');
+  res.write("<b>Information received!</b>");
 
   res.end();
 }
