@@ -1,5 +1,14 @@
 var Tasks = {
 	list: function(calback){
+		connection.query(query, [1], function(err,rows){
+		if(err) {
+			console.error(err);
+			callback(err, rows);
+		}
+
+		if(rows){
+			calback(rows);
+		}
 
 	},
 	add: function(task, calback){
