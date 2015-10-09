@@ -36,18 +36,17 @@ var Tasks = {
 
 	},
 	add: function(task, connection){
-
 	config.connect(function(pool){
     pool.getConnection(function(err, connection){
 	if(err) { 
 		console.error(err);
 	}else{
-	var query = "INSERT INTO `todo`(tack)";
+	var query = "INSERT INTO todo (task) VALUES (?)";
 
-	connection.query(query, function(err,rows){
+	connection.query(query,[task], function(err,rows){
 		if(err) console.error(err);
 		if(rows){
-			console.log(rows);
+			console.log("Запись добавленна!");
 		}
 	});
 }
@@ -56,13 +55,49 @@ var Tasks = {
 });
 
 	},
-	change: function(id, text, calback){
+	change: function(text, id, calback){
+
+		config.connect(function(pool){
+    pool.getConnection(function(err, connection){
+	if(err) { 
+		console.error(err);
+	}else{
+	var query = "UPDATE todo SET task = ? WHERE id = '?'";
+
+	connection.query(query,[text,id], function(err,rows){
+		if(err) console.error(err);
+		if(rows){
+			console.log("Запись обновлена!");
+		}
+	});
+}
+	
+});
+});
+
 
 	},
 	complete: function(id, calback){
 
 	},
 	delete: function(id, calback){
+	config.connect(function(pool){
+    pool.getConnection(function(err, connection){
+	if(err) { 
+		console.error(err);
+	}else{
+	var query = "DELETE FROM `todo` WHERE id = ?";
+
+	connection.query(query,[id], function(err,rows){
+		if(err) console.error(err);
+		if(rows){
+			console.log("Запись Удалена!");
+		}
+	});
+}
+	
+});
+});
 
 	}
 };
