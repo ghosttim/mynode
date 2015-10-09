@@ -1,17 +1,12 @@
-var mysql = require('mysql');
+var tasks  = require('./models/tasks');
 
-var connection = mysql.createConnection({
-      host     :'127.0.0.1',
-      database :'mysql',
-      user     :'root',
-      password :''
+tasks.list(function(rows){
+		rows;
 	});
 
-connection.connect(function(err){
-	if (err){
-		console.error("Вот блин \n"+err);
-	}else{
-		console.log("Подключено");
-	}
-});
-
+/*
+param = 'new';
+tasks.add(function(param,rows){
+		rows;
+	});
+*/
