@@ -1,30 +1,38 @@
+var express    = require('express');
+var app        = express();
+
+var handlebars = require('handlebars');
+var templating = require('consolidate');
 var tasks  = require('./models/tasks');
-// Отображет все записи
-/*
-tasks.list(function(rows){
-		rows;
-	});
-*/
 
-//Добавляет новую запись
-/*
-var task = 'update';
-tasks.add(task, function(rows){
-		
-	});
-*/
-//Обновляет данные
-/*
-var id = 2;
-var text = 'new text';
-tasks.change(text, id, function(rows){
-		
-	});
+app.engine('html',templating.handlebars);
+app.set('view engine','html');
+app.set('views',__dirname + '/views');
 
-*/
-//Удаление таблиц
-var id = 2;
+app.get('/', function(req, res, test) {
 
-tasks.delete(id, function(rows){
-		
+	tasks.list(function(allList){
+		//return test(allList.todo);
+	   var x = allList;
+		//console.log(x);
+	   test (x);
 	});
+console.dir(test[]);
+//console.log(test)
+//res.send(toString(test));
+
+	res.render('index', {
+		title: 'Список задач'
+	});
+});
+
+
+
+
+
+var server = app.listen(9001, function(){
+	var host = server.address().address;
+	var port = server.address().port;
+
+	console.log("listening: ", host, "port: ", port);
+});
