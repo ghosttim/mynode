@@ -7,9 +7,15 @@
 <h1>{{title}}</h1>
 
 
-<input type="checkbox"><i>{{num1}} :</i><span> {{task1}} </span><a href="/update?uid={{num1}}" title="Изменить">R</a>//<a href="#" title="Удалить">X</a><br>
+<i>{{num1}} :</i><span> {{task1}} </span>
+<a href="/do?{{num1}}" title="Сделано">DO</a> // 
+<a href="/update?{{num1}}" title="Изменить">R</a> // 
+<a href="/delete?{{num1}}" title="Удалить">X</a><br>
 
-<input type="checkbox"><i>{{num2}} :</i><span> {{task2}} </span><a href="/update?uid={{num2}}" title="Изменить">R</a>//<a href="#" title="Удалить">X</a><br>
+<i>{{num2}} :</i><span> {{task2}} </span>
+<a href="/do?{{num2}}" title="Сделано">DO</a> // 
+<a href="/update?{{num2}}" title="Изменить">R</a> // 
+<a href="/delete?{{num2}}" title="Удалить">X</a><br>
 
 <br><br>
 <form method="post" action="/add">

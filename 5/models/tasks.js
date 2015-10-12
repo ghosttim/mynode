@@ -56,12 +56,12 @@ var Tasks = {
 	if(err) { 
 		console.error(err);
 	}else{
-	var query = "UPDATE todo SET task = ? WHERE id = '?'";
+	var query = "UPDATE todo SET task = ? WHERE id = ?";
 
 	connection.query(query,[text,id], function(err,rows){
 		if(err) console.error(err);
 		if(rows){
-			console.log("Запись обновлена!");
+			console.log("Обновление данных!");
 		}
 	});
 }
@@ -73,7 +73,28 @@ var Tasks = {
 	},
 	complete: function(id, calback){
 
+	config.connect(function(pool){
+    pool.getConnection(function(err, connection){
+	if(err) { 
+		console.error(err);
+	}else{
+    
+
+	var query = "UPDATE todo SET task = ? WHERE id = ?";
+
+	connection.query(query,["Done",id], function(err,rows){
+		if(err) console.error(err);
+		if(rows){
+			console.log("Выполнено!");
+		}
+	});
+}
+	
+});
+});
+
 	},
+
 	delete: function(id, calback){
 	config.connect(function(pool){
     pool.getConnection(function(err, connection){

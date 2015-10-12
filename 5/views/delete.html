@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+</head>
+<body>
+<h1>{{title}}</h1>
+
+
+
+<form method="post" action="/del">
+<i>id: {{uid}}</i>
+<input type="hidden" name="delTask" value="{{uid}}">
+<input type="submit" value="Удалить"> 
+<a href="/">Вернуться</a>
+
+</form>
+
+</body>
+</html>
