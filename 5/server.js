@@ -16,21 +16,24 @@ app.get('/', function(req, res) {
 
 	 tasks.list(function(allList){
 	   var x = allList;
+	   //var long =x.length;
+
+	   
 
 	   res.render('index', {
 	   	  title: 'Список задач',
 	   	  num1:  x[0].id,
 	   	  num2:  x[1].id,
+	   	  num3:  x[2].id,
+	   	  num4:  x[3].id,
+	   	  num5:  x[4].id,
+	   	  num6:  x[5].id,
 		  task1: x[0].task,
 		  task2: x[1].task,
-		 /* task3: x[2].task,
+		  task3: x[2].task,
 		  task4: x[3].task,
 		  task5: x[4].task,
 		  task6: x[5].task,
-		  task7: x[6].task,
-		  task8: x[7].task,
-		  task9: x[8].task,
-		  task10: x[9].task,*/
 	    });
 	});
 });
