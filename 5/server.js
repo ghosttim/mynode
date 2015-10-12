@@ -46,29 +46,21 @@ app.post('/add', pars, function (req, res) {
 
 
   newTask = req.body.newTask;
-  console.log(newTask);
-  res.write("Add task: ");
-  res.write(newTask);
-  res.end();
+  console.log("Новая запись: "+newTask);
+  //res.write("Add task: ");
+  //res.write(newTask);
+  //res.end();
 
-  tasks.add(newTask, function(connection){
-
-  });
-
+  tasks.add(newTask, function(connection){});
+  
+  res.redirect('/');
 
 }
 });
 
 
 
-/*app.get('/add', function(req, res) {
 
-	 tasks.list(function(allList){
-	   var x = allList;
-
-	   res.send("Добавление к списку задач");
-	});
-});*/
 
 
 
