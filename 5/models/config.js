@@ -5,12 +5,11 @@ var config = {
       host     :'localhost',
       database :'mytest',
       user     :'root',
-      password :'474727'
+      password :''
 	});
 	if (!pool) {
 		console.error("Ошибка подключения"+error)
 	}else{
-		console.log("подключено");
 		param(pool);
 	}
 	}

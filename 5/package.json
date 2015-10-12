@@ -2,5 +2,6 @@
 	"mysql":"*",
 	"express": "*",
 	"handlebars":"*",
-	"consolidate":"*"
+	"consolidate":"*",
+	"body-parser":"*"
 	}}
