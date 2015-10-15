@@ -2,8 +2,5 @@
 	"express":"*",
 	"cookie-parser":"*",
 	"cookie-session":"*",
-	"passport":"*",
-	"passport-local":"*",
-	"body-parser":"*",
-	"express-session":"*"
+	"body-parser":"*"
 	}}
