@@ -11,5 +11,5 @@ client.get('/maps/api/geocode/json?address=Mosscow+Red+Square', function(err, re
     else
        // console.log(util.inspect(obj, {depth: null}));
         console.log(obj.results[0].formatted_address);
-        // video 0:34
+        
 });
